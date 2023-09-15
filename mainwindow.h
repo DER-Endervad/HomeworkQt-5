@@ -35,6 +35,7 @@ private:
     QTime time_second = QTime(0,0,0);
     QTime old_circle = QTime(0,0,0);
     QTime new_circle = QTime(0,0,0);
+    QTime diff_circle = QTime(0,0,0);
     const QTime null_time = QTime(0,0,0);
 };
 #endif // MAINWINDOW_H
