@@ -51,6 +51,7 @@ void MainWindow::on_pB_clear_clicked()
     ui->tE_circle->clear();
     cir_n = 1;
     old_circle = null_time;
+    new_circle = null_time;
 }
 
 
