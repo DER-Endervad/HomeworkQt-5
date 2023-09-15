@@ -62,7 +62,5 @@ void MainWindow::on_pB_circle_clicked()
     new_circle = new_circle.addSecs(second);
     ui->tE_circle->append("№"+QString::number(cir_n)+". Время круга: " + new_circle.toString("hh::mm::ss"));
     cir_n++;
-    qDebug() << second;
-    qDebug() << new_circle;
 }
 
