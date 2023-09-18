@@ -9,9 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->pB_start_stop->setStyleSheet("color : green");
     ui->pB_circle->setEnabled(false);
-    timer = new QTimer();
-    ui->lE_time->setText(time_second.toString("hh:mm:ss"));
-    connect(timer, &QTimer::timeout, this, &MainWindow::slotTimerAlarm);
+    watch = new Stopwatch(this);
+    ui->lE_time->setText(watch->look_time().toString("hh:mm:ss.z"));
+    connect(watch, &Stopwatch::time_signal_start, this, &MainWindow::slotTimerAlarm);
+    connect(watch, &Stopwatch::time_signal, this, &MainWindow::slotTimerWatch);
 }
 
 MainWindow::~MainWindow()
@@ -26,43 +27,40 @@ void MainWindow::on_pB_start_stop_clicked()
         ui->pB_start_stop->setText("Стоп");
         ui->pB_start_stop->setStyleSheet("color : red");
         ui->pB_circle->setEnabled(true);
-        timer->start(1000);
+        watch->start();
         start_stop = 1;
     } else {
         ui->pB_start_stop->setText("Старт");
         ui->pB_start_stop->setStyleSheet("color : green");
         ui->pB_circle->setEnabled(false);
-        timer->stop();
+        watch->stop();
         start_stop = 0;
     }
 }
 
 void MainWindow::slotTimerAlarm()
 {
-    time_second = time_second.addSecs(1);
-    ui->lE_time->setText(time_second.toString("hh:mm:ss"));
+    watch->slotTimerAlarm();
+}
+
+void MainWindow::slotTimerWatch()
+{
+    ui->lE_time->setText(watch->look_time().toString("hh:mm:ss.z"));
 }
 
 
 void MainWindow::on_pB_clear_clicked()
 {
-    time_second = null_time;
-    ui->lE_time->setText(time_second.toString("hh:mm:ss"));
+    watch->clear();
+    ui->lE_time->setText(watch->look_time().toString("hh:mm:ss.z"));
     ui->tE_circle->clear();
     cir_n = 1;
-    old_circle = null_time;
-    new_circle = null_time;
 }
 
 
 void MainWindow::on_pB_circle_clicked()
 {
-    old_circle = new_circle;
-    int second = old_circle.secsTo(time_second);
-    new_circle = time_second;
-    diff_circle = null_time;
-    diff_circle = diff_circle.addSecs(second);
-    ui->tE_circle->append("№"+QString::number(cir_n)+". Время круга: " + diff_circle.toString("hh::mm::ss"));
+    ui->tE_circle->append("№"+QString::number(cir_n)+". Время круга: " + watch->diff().toString("hh:mm:ss.z"));
     cir_n++;
 }
 

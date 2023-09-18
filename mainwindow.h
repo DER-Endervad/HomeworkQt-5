@@ -4,8 +4,7 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QFont>
-#include <QTimer>
-#include <QTime>
+#include "stopwatch.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,20 +21,14 @@ public:
 private slots:
     void on_pB_start_stop_clicked();
     void slotTimerAlarm();
-
+    void slotTimerWatch();
     void on_pB_clear_clicked();
-
     void on_pB_circle_clicked();
 
 private:
     Ui::MainWindow *ui;
     int start_stop = 0;
     int cir_n = 1;
-    QTimer *timer;
-    QTime time_second = QTime(0,0,0);
-    QTime old_circle = QTime(0,0,0);
-    QTime new_circle = QTime(0,0,0);
-    QTime diff_circle = QTime(0,0,0);
-    const QTime null_time = QTime(0,0,0);
+    Stopwatch *watch;
 };
 #endif // MAINWINDOW_H
