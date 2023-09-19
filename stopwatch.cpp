@@ -3,17 +3,12 @@
 Stopwatch::Stopwatch(QObject *parent)
     : QObject{parent}
 {
-    timer = new QTimer();
-    time_link = &time_second;
+    timer = new QTimer(this);
 
     connect(timer, &QTimer::timeout, this, &Stopwatch::slotTimerAlarm);
 }
 
-Stopwatch::~Stopwatch()
-{
-    delete timer;
-    delete time_link;
-}
+Stopwatch::~Stopwatch() {}
 
 QTime Stopwatch::look_time()
 {
@@ -37,10 +32,10 @@ void Stopwatch::stop() {
 
 QTime Stopwatch::diff() {
     old_circle = new_circle;
-    int second = old_circle.secsTo(time_second);
+    int second = old_circle.msecsTo(time_second);
     new_circle = time_second;
     diff_circle = null_time;
-    diff_circle = diff_circle.addMSecs(second*1000);
+    diff_circle = diff_circle.addMSecs(second);
     return diff_circle;
 }
 

@@ -19,7 +19,6 @@ public:
 private:
     int cir_n = 1;
     QTimer *timer;
-    QTime *time_link;
     QTime time_second = QTime(0,0,0,0);
     QTime old_circle = QTime(0,0,0,0);
     QTime new_circle = QTime(0,0,0,0);
